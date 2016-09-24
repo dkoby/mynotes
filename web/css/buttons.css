@@ -1,0 +1,28 @@
+
+.button {
+    font-size        : 14px;
+    padding          : 4px;
+    padding-left     : 8px;
+    padding-right    : 8px;
+    border           : solid 2px #555;
+    border-radius    : 4px;
+    cursor           : pointer;
+    min-width        : 80px;
+}
+
+.button_dark {
+    color            : #fff;
+    background-color : #999;
+}
+.button_dark:hover {
+    color            : #000;
+    background-color : #bbb;
+}
+.button_light {
+    color            : #222;
+    background-color : #bbb;
+}
+.button_light:hover {
+    color            : #bbb;
+    background-color : #666;
+}

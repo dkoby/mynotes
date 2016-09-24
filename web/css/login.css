@@ -1,0 +1,29 @@
+@import url("style.css");
+@import url("buttons.css");
+
+.login_top  {
+    height          : 90%;
+}
+
+.login_remember {
+    font-size: 0.6em;
+}
+td.login_reg_td {
+    text-align: right;
+}
+.login_register {
+    font-size        : 0.6em;
+    color            : #222;
+    text-decoration  : underline;
+    cursor           : pointer;
+}
+.login_error {
+    font-size        : 0.6em;
+    color            : #f00;
+}
+.login_button_cell {
+    text-align  : center;
+    padding-top : 8px;
+}
+
+

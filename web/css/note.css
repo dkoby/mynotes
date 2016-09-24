@@ -1,0 +1,131 @@
+
+div.note {
+    border           : solid 2px #444;
+    border-radius    : 4px;
+    padding          : 4px;
+    margin-bottom    : 8px;
+    background-color : #eee;
+}
+
+/*
+ *
+ */
+.note_info {
+    display          : table;
+    width            : 100%;
+    border-top       : dotted 1px #555;
+    font-size        : 0.8em;
+}
+.note_info > div {
+    display          : table-row;
+}
+.note_info > div > div {
+    display          : table-cell;
+    padding-left     : 4px;
+    padding-right    : 4px;
+}
+.note_info_caption {
+    font-weight      : bold;
+    background-color : #fff;
+    width            : 20%;
+}
+
+/*
+ *
+ */
+.note_control {
+    display          : flex;
+    justify-content  : flex-end;
+    flex-direction   : row;
+}
+
+.note_page_control_block {
+    font-size        : 12px;
+    font-weight      : bold;
+}
+.note_page_control {
+    vertical-align   : middle;
+    padding-right    : 2px;
+}
+.note_page_input_button {
+    padding     : 4px;
+    border      : solid 1px #000;
+    margin-left : 2px;
+    cursor      : pointer;
+}
+
+img.pager_button_block_item {
+    display            : inline-block;
+}
+/*
+ *
+ */
+.notes_book_caption {
+    display        : block;
+    text-align     : center;
+    font-size      : 14px;
+    font-weight    : bold;
+    margin         : 8px;
+}
+.note_message {
+    /*
+    overflow: auto;
+    */
+    overflow: hidden;
+}
+/*
+ *
+ */
+.note_image_block {
+    margin     : 8px;
+    text-align : center;
+}
+.note_image {
+    border  : dotted 1px #888;
+}
+
+/*
+ *
+ */
+.note_tags {
+    /*
+    overflow-wrap: break-all;
+    */
+    padding  : 8px;
+}
+/*
+ *
+ */
+.note_tag_link {
+    color           : #00f;
+    text-decoration : none;
+}
+.note_tag_link:hover {
+    cursor : pointer;
+}
+.note_tag_remove_link {
+    color           : #00f;
+    text-decoration : none;
+}
+.note_tag_remove_link:hover {
+    text-decoration : line-through;
+    cursor : pointer;
+}
+.note_link {
+    font-weight : bold;
+}
+.note_link:hover {
+}
+
+a.note_link {
+    color            : #00f;
+    text-decoration  : none;
+    font-weight      : bold;
+    font-size        : 1.2em;
+}
+
+a.note_link:link a.note_link:visited {
+    color  : #00f;
+}
+
+

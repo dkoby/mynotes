@@ -1,0 +1,80 @@
+@import url("style.css");
+@import url("buttons.css");
+@import url("library.css");
+@import url("note.css");
+
+html {
+    padding : 8px;
+}
+
+div.home_control {
+    position         : fixed;
+    left             : 2%;
+    width            : 15vw;
+    background-color : #eee;
+    color            : #111;
+    padding          : 4px;
+    padding-bottom : 24px;
+
+    display         : flex;    
+    flex-direction  : column;    
+    align-items     : center;    
+    justify-content : center;
+    margin          : 0;
+}
+
+div.home_workspace {
+    position         : relative;
+    left             : 19%;
+    width            : 60vw;
+    background-color : #fff;
+}
+
+.home_control > .user_head {
+    font-size      : 16px;  
+    width          : 100%;
+    text-align     : center;
+    padding        : 2px;
+}
+.home_control > .menu {
+    font-size  : 14px;  
+    margin-top : 16px;
+
+    display         : flex;    
+    flex-direction  : column;    
+    align-items     : center;    
+    justify-content : center;
+}
+
+.menu > .menu_item {
+    font-size       : 16px;
+    text-decoration : none;
+    padding-left    : 4px;
+    padding-right   : 4px;
+    border          : 2px;
+    border-radius   : 4px;
+}
+.menu > .menu_item:hover {
+    /* text-indent     : 8px; */
+    color             : #fff;
+    background-color  : #000;
+    border            : #000;
+}
+
+div.home_workspace_header_control {
+    border-bottom-style    : dotted;
+    border-width           : 2px;
+    border-color           : #aaa;
+    width                  : 100%;
+}
+
+div.home_workspace_header_control > .new_message {
+    font-size   : 36px;
+    cursor      : pointer;
+}
+
+div.home_workspace_main {
+    margin           : 16px;
+}
+
+

@@ -1,0 +1,64 @@
+
+div.table {
+    display                : table;
+    width                  : 100%;
+    border-spacing         : 4px;
+}
+
+div.library_book_entry {
+    display                : table-row;
+}
+
+.library_button_block {
+    display            : table-cell;
+    vertical-align     : top;
+}
+
+img.library_button_block_item {
+    display            : block;
+    width              : 18px;
+    height             : 18px;
+    padding-bottom     : 2px;
+}
+
+.library_book_thumb {
+    display            : table-cell;
+
+    width              : 80px;
+    height             : 120px;
+}
+.library_book_border {
+    border             : 3px solid black;
+}
+
+.library_book_info {
+    display            : table-cell;
+
+    width         : 100%;
+    vertical-align     : top;
+}
+
+.library_book_info_table {
+    display       : table;
+    width         : 100%;
+    font-size      : 14px;
+    border-spacing : 2px;
+}
+
+.library_book_info_row {
+    display       : table-row;
+}
+
+.library_book_info_caption {
+    font-weight   : bold;
+    width         : 10%;
+}
+
+.library_book_info_cell {
+    display       : table-cell;
+    text-align    : left;
+    padding-left  : 2px;
+    padding-right : 2px;
+    background-color : #eee;
+}
+

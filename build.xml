@@ -1,0 +1,159 @@
+<!--
+    Copyright 2016 Dmitry Kobylin
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<project name="MyNotes" default="compile" basedir=".">
+    <property name="build.sysclasspath" value="last"/> <!-- XXX -->
+    <property environment="env"/>
+    <property file="build.properties"/>
+    <property file="${user.home}/build.properties"/>
+    <!-- ========== Set source directory, build directory ==================== -->
+    <property name="src.dir"   value="${basedir}/src"/>
+    <property name="utils.dir" value="${basedir}/utils"/>
+    <condition property="build.dir" value="${env.BUILD_DIR}/${ant.project.name}" else="${basedir}/build">
+        <isset property="env.BUILD_DIR"/>
+    </condition>
+    <property name="war.dir"  value="${build.dir}/war"/>
+    <property name="war.file" value="ROOT.war"/>
+    <!-- ========== Set debug option for javac =============================== -->
+    <condition property="compile.debug" value="true" else="false">
+        <isset property="env.DEBUG"/>
+    </condition>
+    <property name="compile.debuglevel" value="lines,vars,source"/>
+    <!-- ==================== Compilation Classpath ========================== -->
+    <path id="compile.classpath">
+        <!-- Include all elements that Tomcat exposes to applications -->
+        <fileset dir="${catalina.home}/bin">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement location="${catalina.home}/lib"/>
+        <fileset dir="${catalina.home}/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+    <!-- ========== Output values of some properties ========================= -->
+    <echo message="src.dir         : ${src.dir}"/>
+    <echo message="build.dir       : ${build.dir}"/>
+    <echo message="war.file        : ${war.file}"/>
+    <echo message="catalina.home   : ${catalina.home}"/>
+    <echo message="compile.debug   : ${compile.debug}"/>
+    <!-- ========== Target for compile servlets ============================== -->
+    <target name="compile">
+        <mkdir dir="${build.dir}/WEB-INF/classes"/>
+        <javac
+            srcdir="${src.dir}"
+            destdir="${build.dir}/WEB-INF/classes"
+            debug="${compile.debug}"
+            debuglevel="${compile.debuglevel}">
+                <classpath refid="compile.classpath"/>
+                <compilerarg value="-Xlint:unchecked"/>
+                <compilerarg value="-Xlint:deprecation"/>
+        </javac>
+    </target>
+    <!-- ========== Target for msgcat properties ============================= -->
+    <target name="msgcat" depends="utils">
+        <property name="msgcat.dst_dir" value="WEB-INF/classes/msgcat"/>
+        <mkdir dir="${build.dir}/${msgcat.dst_dir}"/>
+        <msgcatconvert dstdir="${build.dir}/${msgcat.dst_dir}"/>
+    </target>
+    <!-- ========== Target for make archive (war) ============================ -->
+    <target name="war" depends="compile,msgcat">
+        <mkdir dir="${war.dir}"/>
+        <jar destfile="${war.dir}/${war.file}" compress="yes" level="0">
+            <fileset dir="${basedir}/web"/>
+            <fileset dir="${build.dir}" includes="WEB-INF/classes/**/*.class"/>
+            <fileset dir="${build.dir}" includes="${msgcat.dst_dir}/*.properties"/>
+        </jar>
+    </target>
+    <!-- =========== Misc commands =========================================== -->
+    <target name="install" depends="war">
+        <copy file="${war.dir}/${war.file}" todir="${install.path}"/>
+    </target>
+    <!-- =========== Commands to tomcat manager ============================== -->
+    <target name="deploy" depends="utils,war">
+        <tomcattool
+            action="deploywar"
+            war="${war.dir}/${war.file}"
+            managerPath="${manager.path}"
+            managerUrl="${manager.url}"
+            managerUser="${manager.user}"
+            managerPassword="${manager.password}"
+            managerUpdate="true"
+            />
+    </target>
+    <target name="undeploy" depends="utils,war">
+        <tomcattool
+            action="undeploy"
+            managerPath="${manager.path}"
+            managerUrl="${manager.url}"
+            managerUser="${manager.user}"
+            managerPassword="${manager.password}"
+            managerUpdate="true"
+            />
+    </target>
+    <target name="reload" depends="utils">
+        <tomcattool
+            action="reload"
+            managerPath="${manager.path}"
+            managerUrl="${manager.url}"
+            managerUser="${manager.user}"
+            managerPassword="${manager.password}"
+            />
+    </target>
+    <target name="start" depends="utils">
+        <tomcattool
+            action="start"
+            managerPath="${manager.path}"
+            managerUrl="${manager.url}"
+            managerUser="${manager.user}"
+            managerPassword="${manager.password}"
+            />
+    </target>
+    <target name="stop" depends="utils">
+        <tomcattool
+            action="stop"
+            managerPath="${manager.path}"
+            managerUrl="${manager.url}"
+            managerUser="${manager.user}"
+            managerPassword="${manager.password}"
+            />
+    </target>
+    <target name="list" depends="utils">
+        <tomcattool
+            action="list"
+            managerUrl="${manager.url}"
+            managerUser="${manager.user}"
+            managerPassword="${manager.password}"
+            />
+    </target>
+    <!-- =========== Tools used by build process, deploy, undeploy, etc. ===== -->
+    <target name="utils">
+        <mkdir dir="${build.dir}/utils"/>
+        <javac
+            srcdir="${utils.dir}"
+            destdir="${build.dir}/utils"
+            debug="${compile.debug}"
+            debuglevel="${compile.debuglevel}">
+                <compilerarg value="-Xlint:unchecked"/>
+                <compilerarg value="-Xlint:deprecation"/>
+        </javac>
+        <taskdef name="tomcattool" classname="tasks.TomcatTool" classpath="${build.dir}/utils"/>
+        <taskdef name="msgcatconvert" classname="tasks.MsgcatTool" classpath="${build.dir}/utils"/>
+    </target>
+    <!-- =========== Cleanup build directory. ================================ -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>
+
